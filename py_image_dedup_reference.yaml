@@ -6,7 +6,7 @@ py_image_dedup:
   analysis:
     # Whether to search for duplicates across directories when
     # specifying more than one image source directory
-    across_dirs: false
+    across_dirs: true
     # A filter for the file extensions to analyse
     file_extensions:
       - .png
@@ -16,44 +16,44 @@ py_image_dedup:
     recursive: true
     # A list of source directories to analyse
     source_directories:
-      - /home/myuser/pictures/
+      - /mnt/source/
     # A list of regex patterns to ignore when traversing any of the
     # source directories
     exclusions:
       - ".*/excluded/.*"
     # The number of threads to use for image analysis.
     # If unset, this will default to `os.cpu_count()`.
-    threads: 1
+    threads: 4
     # Whether to include EXIF data of images in the analysis
     use_exif_data: true
 
   # Deduplication phase specific configuration options, see README.md
   deduplication:
     # The target directory to move duplicate images to
-    duplicates_target_directory: /home/myuser/pictures/duplicates/
+    duplicates_target_directory: /mnt/duplicates/
     # Upper limit on the modification date difference between
     # two duplicate images to be considered the same image.
     max_file_modification_time_diff: 0:05:00
     # Specifies the criteria and their order for ordering the list of duplicates
     # to select the best copy.
-    prioritization_rules:
-      - name: "more-exif-data"
-      - name: "less-exif-data"
-      - name: "bigger-file-size"
-      - name: "smaller-file-size"
-      - name: "newer-file-modification-date"
-      - name: "older-file-modification-date"
-      - name: "smaller-distance"
-      - name: "bigger-distance"
-      - name: "longer-path"
-      - name: "shorter-path"
-      - name: "contains-copy-in-file-name"
-      - name: "longer-file-name"
-      - name: "shorter-file-name"
-      - name: "longer-folder-path"
-      - name: "shorter-folder-path"
-      - name: "higher-score"
-      - name: "lower-score"
+    # prioritization_rules:
+      # - name: "more-exif-data"
+      # - name: "less-exif-data"
+      # - name: "bigger-file-size"
+      # - name: "smaller-file-size"
+      # - name: "newer-file-modification-date"
+      # - name: "older-file-modification-date"
+      # - name: "smaller-distance"
+      # - name: "bigger-distance"
+      # - name: "longer-path"
+      # - name: "shorter-path"
+      # - name: "contains-copy-in-file-name"
+      # - name: "longer-file-name"
+      # - name: "shorter-file-name"
+      # - name: "longer-folder-path"
+      # - name: "shorter-folder-path"
+      # - name: "higher-score"
+      # - name: "lower-score"
 
   # Daemon specific configuration options, see README.md
   daemon:
@@ -72,7 +72,7 @@ py_image_dedup:
     # Whether to automatically create an index in the target database.
     auto_create_index: true
     # Hostname of the elasticsearch backend instance to use
-    host: 127.0.0.1
+    host: sandbox
     # Port of the elasticsearch backend instance to use.
     port: 9200
     # The index name to use for storing and querying image analysis data.
@@ -85,6 +85,6 @@ py_image_dedup:
   # Prometheus exporter specific configuration options, see README.md
   stats:
     # Whether to enable prometheus statistics or not.
-    enabled: true
+    enabled: false
     # The port to expose statistics on.
     port: 8000

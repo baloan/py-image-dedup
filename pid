@@ -1,0 +1,12 @@
+docker run -t --name py-image-dedup --rm -e PUID=0 -e PGID=0 \
+  -e PY_IMAGE_DEDUP_DRY_RUN=False \
+  -e PY_IMAGE_DEDUP_ANALYSIS_RECURSIVE=True \
+  -e PY_IMAGE_DEDUP_ANALYSIS_ACROSS_DIRS=True \
+  -e PY_IMAGE_DEDUP_ANALYSIS_SOURCE_DIRECTORIES=/mnt/source/ \
+  -e PY_IMAGE_DEDUP_DEDUPLICATION_DUPLICATES_TARGET_DIRECTORY=/mnt/duplicates/ \
+  -e PY_IMAGE_DEDUP_ELASTICSEARCH_HOST=sandbox \
+  -e PY_IMAGE_DEDUP_STATS_ENABLED=False \
+  -e PY_IMAGE_DEDUP_ANALYSIS_USE_EXIF_DATA=False \
+  -v /mnt/rec/bdsmlr:/mnt/source \
+  -v /mnt/images/duplicates:/mnt/duplicates \
+  py-image-dedup:latest $@ | tee pid.log
